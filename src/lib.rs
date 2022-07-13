@@ -5,6 +5,7 @@ pub mod env;
 pub mod ptrace;
 pub mod vdso;
 
+#[inline(always)] // for instruction overwrite
 fn die() {
     panic!("found debugger");
 }
