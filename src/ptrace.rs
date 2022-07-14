@@ -4,7 +4,7 @@ use nix::unistd::Pid;
 
 use crate::{die, CheckResult};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum PtraceResult {
     NotFound,
     Found(Errno),
@@ -12,11 +12,8 @@ pub enum PtraceResult {
 
 impl CheckResult for PtraceResult {
     fn crash_if_exists(&self) {
-        match self {
-            Self::Found(_) => {
-                die();
-            }
-            _ => {}
+        if let PtraceResult::Found(_) = self {
+            die();
         }
     }
 }
